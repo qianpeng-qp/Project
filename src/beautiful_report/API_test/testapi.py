@@ -1,6 +1,7 @@
 import requests
 import unittest
 import ddt
+from SDKclient import SDKclient
 
 
 @ddt.ddt
@@ -10,7 +11,9 @@ class test_topic_api(unittest.TestCase):
     '''
 
     def test_topic(self):
-        r = requests.get(url="http://39.107.96.138:3000/api/v1/topics?page=1&tab=ask&limit=1&mdrender=true")
+        #r = requests.get(url="http://39.107.96.138:3000/api/v1/topics?page=1&tab=ask&limit=1&mdrender=true")
+        url = "http://39.107.96.138:3000/api/v1/topics?page=1&tab=ask&limit=1&mdrender=true"
+        r = SDKclient.do_requests(url, method='get')
         print(r, type(r))
         # 响应结果 body 文本格式
         text = r.text
@@ -46,7 +49,8 @@ class test_topic_api(unittest.TestCase):
     def test_math(self, value):
         url = 'http://39.107.96.138:3000/api/v1/topics'
         print(type(value), value)
-        r = requests.get(url, value)
+        #r = requests.get(url, value)
+        r = SDKclient.do_requests(url,'get',data = value)
         json = r.json()
         # 响应状态码
         statuscode = r.status_code
@@ -75,7 +79,8 @@ class test_topic_api(unittest.TestCase):
             "tab": "ask",
             "content": "xxxxxxxxxxxxx"
         }
-        r = requests.post(url=url, data=testdata)
+        #r = requests.post(url=url, data=testdata)
+        r = SDKclient.do_requests(url,'post',data=testdata)
         print(r.json())
         # 请求头信息
         print(r.request.headers)
